@@ -1,0 +1,87 @@
+:root {
+    --card-bg: rgba(17, 17, 17, 0.75);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --text-main: #ffffff;
+    --text-dim: #bbbbbb;
+    --spotify-green: #1DB954;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: #000;
+    color: var(--text-main);
+    font-family: 'Parkinsans', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    cursor: crosshair;
+    user-select: none;
+}
+
+#overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #000;
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999; cursor: pointer;
+    transition: opacity 0.8s ease, visibility 0.8s;
+}
+
+.overlay-content p { font-size: 1.2rem; letter-spacing: 3px; animation: pulse 2s infinite; text-transform: lowercase; }
+
+@keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+.fade-out { opacity: 0 !important; visibility: hidden !important; }
+
+.video-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+.video-bg video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4); }
+
+.wrapper { width: 100%; max-width: 500px; z-index: 1; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    padding: 30px;
+    border-radius: 12px;
+}
+
+.main-card { text-align: center; position: relative; }
+.views { position: absolute; top: 15px; left: 15px; font-size: 0.7rem; color: var(--text-dim); }
+.main-avatar { width: 90px; height: 90px; border-radius: 50%; border: 2px solid var(--border-color); margin-bottom: 12px; object-fit: cover; }
+.name { font-size: 2.2rem; font-weight: 800; margin-bottom: 5px; }
+.description { color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; margin-bottom: 20px; }
+.main-socials a { color: var(--text-main); font-size: 1.3rem; margin: 0 12px; transition: transform 0.3s ease; display: inline-block; }
+.main-socials a:hover { transform: translateY(-3px); opacity: 0.7; }
+
+/* Spotify Card & Controls */
+.spotify-card { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; }
+.spotify-header { display: flex; align-items: center; gap: 12px; }
+.spotify-logo { color: var(--spotify-green); font-size: 1.8rem; }
+.spotify-info { display: flex; flex-direction: column; }
+.spotify-status { font-size: 0.6rem; text-transform: uppercase; color: var(--spotify-green); font-weight: 800; }
+.spotify-track { font-size: 0.9rem; font-weight: 600; }
+.spotify-artist { font-size: 0.7rem; color: var(--text-dim); }
+
+.music-controls { display: flex; gap: 15px; }
+.music-controls button {
+    background: none; border: none; color: white;
+    font-size: 1.1rem; cursor: pointer; transition: 0.2s;
+}
+.music-controls button:hover { color: var(--spotify-green); transform: scale(1.1); }
+
+/* Work Section */
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.section-title { font-weight: 600; font-size: 0.9rem; text-transform: lowercase; }
+.discord-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-color); color: #fff; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-family: inherit; font-size: 0.7rem; }
+.divider { border: 0; border-top: 1px solid var(--border-color); margin-bottom: 20px; }
+.work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.work-item { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px; transition: 0.3s; }
+.work-item:hover { background: rgba(255, 255, 255, 0.08); transform: translateY(-3px); border-color: rgba(255, 255, 255, 0.3); }
+.work-name { display: block; font-weight: 600; font-size: 0.85rem; }
+.work-desc { font-size: 0.65rem; color: var(--text-dim); }
+
+@media (max-width: 450px) { .work-grid { grid-template-columns: 1fr; } .spotify-card { flex-direction: column; gap: 10px; text-align: center; } }
