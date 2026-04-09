@@ -11,37 +11,39 @@
 </head>
 <body>
 
-    <div id="overlay" onclick="enterSite()">
+    <div id="overlay" onclick="enterSite()" role="button" tabindex="0">
         <div class="overlay-content">
             <p>click to enter...</p>
         </div>
     </div>
 
     <div class="video-bg">
-        <video id="bgVideo" muted loop playsinline>
+        <video id="bgVideo" muted loop playsinline preload="auto">
             <source src="/Minecraft03_compressed.mp4" type="video/mp4">
         </video>
     </div>
 
-    <audio id="bgMusic" loop>
+    <audio id="bgMusic" loop preload="auto">
         <source src="dream.mp3" type="audio/mpeg">
     </audio>
 
     <div class="wrapper">
         <main class="card main-card">
-            <div class="views"><i class="fa-solid fa-wifi"></i></i></div>
+            <div class="views" title="Online Status">
+                <i class="fa-solid fa-wifi"></i>
+            </div>
             <div class="avatar-container">
-                <img src="/pfp.webp" alt="Avatar" class="main-avatar">
+                <img src="/pfp.webp" alt="nikegtag profile picture" class="main-avatar">
             </div>
             <h1 class="name">nikegtag</h1>
             <p class="description">
                 front and backend web dev<br>
-                skills: HTML, CSS, JS, Python, Lua, C#, JSON (if you can call html and css a language)
+                <span>skills: HTML, CSS, JS, Python, Lua, C#, JSON</span>
             </p>
             <div class="main-socials">
-                <a href="https://github.com/noseygames" target="_blank"><i class="fa-brands fa-github"></i></a>
-                <a href="https://youtube.com/@nikegtag" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://tiktok.com/@gnmath" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://github.com/noseygames" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="https://youtube.com/@nikegtag" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://tiktok.com/@gnmath" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
             </div>
         </main>
 
@@ -56,28 +58,28 @@
             </div>
 
             <div class="music-controls">
-                <button onclick="skipTime(-5)" title="Rewind 5s"><i class="fa-solid fa-backward-step"></i></button>
-                <button id="playPauseBtn" onclick="togglePlay()" title="Play/Pause"><i class="fa-solid fa-pause"></i></button>
-                <button onclick="skipTime(5)" title="Forward 5s"><i class="fa-solid fa-forward-step"></i></button>
+                <button onclick="skipTime(-5)" aria-label="Rewind 5 seconds"><i class="fa-solid fa-backward-step"></i></button>
+                <button id="playPauseBtn" onclick="togglePlay()" aria-label="Play/Pause"><i class="fa-solid fa-pause"></i></button>
+                <button onclick="skipTime(5)" aria-label="Forward 5 seconds"><i class="fa-solid fa-forward-step"></i></button>
             </div>
         </section>
 
         <section class="card work-card">
             <div class="card-header">
                 <span class="section-title"><i class="fa-solid fa-code"></i> my work</span>
-                <button class="discord-btn" onclick="copydiddy()">Add @nikegtag <i class="fa-solid fa-arrow-right"></i></button>
+                <button class="discord-btn" onclick="copyDiscord()">Add @nikegtag <i class="fa-solid fa-arrow-right"></i></button>
             </div>
             <hr class="divider">
             <div class="work-grid">
-                <a href="https://nikehub.org" class="work-item">
+                <a href="https://nikehub.org" class="work-item" target="_blank">
                     <div class="work-icon"><i class="fa-solid fa-wrench"></i></div>
                     <div class="work-info">
                         <span class="work-name">nikehub</span>
                         <span class="work-desc">the only unblocked game site you'll need...</span>
                     </div>
                 </a>
-                <a href="https://my-presentation.pages.dev" class="work-item">
-                    <i class="fa-solid fa-wifi"></i>
+                <a href="https://my-presentation.pages.dev" class="work-item" target="_blank">
+                    <div class="work-icon"><i class="fa-solid fa-tower-broadcast"></i></div>
                     <div class="work-info">
                         <span class="work-name">nikenetwork proxy</span>
                         <span class="work-desc">unleash the true potential of your network...</span>
@@ -89,15 +91,22 @@
 
     <script>
         const audio = document.getElementById('bgMusic');
+        const video = document.getElementById('bgVideo');
         const playPauseBtn = document.getElementById('playPauseBtn');
 
         function enterSite() {
             const overlay = document.getElementById('overlay');
-            const video = document.getElementById('bgVideo');
-            video.play();
-            audio.play();
+            
+            // Start media
+            if (video) video.play().catch(e => console.log("Video play blocked"));
+            audio.play().catch(e => console.log("Audio play blocked"));
             audio.volume = 0.5;
+
+            // Visual transition
             overlay.classList.add('fade-out');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 800);
         }
 
         function togglePlay() {
@@ -114,15 +123,19 @@
             audio.currentTime += seconds;
         }
 
-        function copydiddy() {
+        function copyDiscord() {
             const btn = document.querySelector('.discord-btn');
-            navigator.clipboard.writeText("nikegtag");
-            const originalText = btn.innerHTML;
-            btn.innerHTML = 'Copied! <i class="fa-solid fa-check"></i>';
-            setTimeout(() => { btn.innerHTML = originalText; }, 2000);
+            navigator.clipboard.writeText("nikegtag").then(() => {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = 'Copied! <i class="fa-solid fa-check"></i>';
+                btn.style.background = "#1DB954";
+                setTimeout(() => { 
+                    btn.innerHTML = originalText; 
+                    btn.style.background = ""; 
+                }, 2000);
+            });
         }
 
-        // ig bro
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.onkeydown = e => {
             if (e.keyCode == 123) return false;
@@ -131,6 +144,4 @@
         };
     </script>
 </body>
-
 </html>
-
